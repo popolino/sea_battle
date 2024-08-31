@@ -1,0 +1,67 @@
+.navbar {
+  background-color: var(--blue);
+  max-width: max-content;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px 30px 30px;
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+    padding-bottom: 20px;
+    position: relative;
+    white-space: nowrap;
+  }
+  h1:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    border-radius: 5px;
+  }
+  ul{
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap:60px;
+
+  }
+  .list{
+    cursor: pointer;
+    padding: 5px 20px 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    svg{
+      width: 55px;
+      fill: white;
+    }
+    p{
+      font-size: 20px;
+      color: white;
+      font-weight: 600;
+      text-align: start;
+      line-height: 1.5;
+      white-space: nowrap;
+    }
+  }
+  .list:hover{
+    background-color: var(--light-hover);
+    border-radius: 30px;
+    margin-left: -10px;
+    padding-left: 20px;
+  }
+  .active{
+    background-color: var(--active);
+    border-radius: 30px;
+    margin-left: -10px;
+    padding-left: 20px;
+  }
+  .disabled{
+    cursor: auto;
+  }
+}

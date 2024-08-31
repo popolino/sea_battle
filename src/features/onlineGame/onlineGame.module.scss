@@ -1,0 +1,136 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: var(--background);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 50px;
+  gap: 30px;
+  align-items: center;
+  & > h1 {
+    width: 100%;
+    font-size: 70px;
+    font-weight: 700;
+    color: var(--blue);
+    text-align: start;
+  }
+}
+.content {
+  background-color: white;
+  border-radius: 35px;
+  width: 100%;
+  height: 100%;
+  padding: 30px 0;
+  gap: 30px 0;
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.button {
+  & > button {
+    width: 200px;
+    font-size: 20px;
+  }
+}
+.rooms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px 0;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.room {
+  background-color: var(--background);
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  margin: 0 30px;
+  padding: 30px;
+  gap: 20px 0;
+  border-radius: 25px;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    white-space: nowrap;
+    & > h2,
+    p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 20px;
+      color: var(--blue-text);
+      font-weight: 600;
+      text-align: start;
+      line-height: 1.5;
+      & > span {
+        color: var(--blue);
+      }
+    }
+    & > h2 {
+      text-transform: uppercase;
+    }
+  }
+}
+.modal {
+  width: 200px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  & > span {
+    & > button {
+      width: 100%;
+    }
+  }
+}
+.modal-opponent {
+  width: 200px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  & > h3 {
+    color: var(--blue-text);
+    font-weight: 500;
+  }
+  & > svg {
+    width: 60px;
+  }
+}
+.loading {
+  width: 100%;
+  height: 100%;
+  background-color: var(--background);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  & > div {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    border-radius: 35px;
+    & > p {
+      font-size: 26px;
+      color: var(--blue-text);
+    }
+    & > svg {
+      width: 70px;
+    }
+    & > button {
+      font-size: 16px;
+      width: 70px;
+    }
+  }
+}

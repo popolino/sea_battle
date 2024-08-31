@@ -1,0 +1,242 @@
+.container {
+  padding: 80px;
+  width: 100%;
+}
+.content {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.cell {
+  width: 35px;
+  height: 35px;
+  background-color: var(--field-blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--dark-blue);
+}
+.ships {
+  max-width: 360px;
+  width: 100%;
+  margin-left: 35px;
+  gap: 5px;
+  display: flex;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: space-between;
+  }
+
+  .ship-container {
+    background-color: var(--panel-blue);
+    border-radius: 20px;
+    width: max-content;
+    padding: 20px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    & > p {
+      color: var(--dark-blue);
+      font-weight: 500;
+      font-size: 14px;
+      width: 72px;
+      & > span {
+        color: var(--blue);
+      }
+    }
+    & > svg {
+      height: 23px;
+      fill: var(--dark-blue);
+    }
+  }
+  .selected {
+    & > svg {
+      fill: var(--light-hover);
+    }
+  }
+  .ship-container:hover {
+    cursor: pointer;
+    & > p {
+      color: var(--blue);
+      & > span {
+        color: var(--blue);
+      }
+    }
+    & > svg {
+      fill: var(--blue);
+    }
+  }
+}
+.opponent {
+  margin-left: 0;
+  .opponent-ship{
+    background-color: var(--panel-pink);
+    & > p {
+      color: var(--pink-text);
+      font-weight: 500;
+      font-size: 14px;
+      width: 72px;
+      & > span {
+        color: var(--pink);
+      }
+    }
+    & > svg {
+      fill: var(--pink-text);
+    }
+  }
+  .opponent-ship:hover{
+    cursor: pointer;
+    & > p {
+      color: var(--blue);
+      & > span {
+        color: var(--blue);
+      }
+    }
+    & > svg {
+      fill: var(--blue);
+    }
+  }
+}
+@keyframes animation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  padding-bottom: 180px;
+  align-items: center;
+  .fire:disabled {
+    background-color: var(--disabled-pink);
+    animation: none;
+  }
+  .fire:disabled:hover {
+    background-color: var(--disabled-pink);
+  }
+  .fire {
+    background-color: var(--red);
+    border-radius: 20px;
+    padding: 10px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: animation 1s ease-in-out infinite;
+    transition: 0.3s;
+    max-width: 100px;
+    & > p {
+      font-size: 20px;
+      font-weight: 500;
+      color: white;
+    }
+    & > svg {
+      width: 30px;
+      fill: white;
+    }
+  }
+  .fire:hover {
+    background-color: var(--pink);
+    transition: 0.3s;
+  }
+  .move {
+    font-size: 20px;
+    color: var(--gray-blue);
+    line-height: 1.5;
+  }
+  & > p,
+  span button {
+    color: white;
+    border-radius: 20px;
+  }
+  & > span button {
+    width: 100%;
+    background-color: var(--active);
+    animation: animation 1s ease-in-out infinite;
+    font-size: 26px;
+    padding: 10px 30px;
+  }
+  & > p {
+    background-color: var(--pink);
+    font-size: 16px;
+    padding: 20px 30px;
+    max-width: 160px;
+  }
+  & > p::first-letter {
+    text-transform: capitalize;
+  }
+
+  & > span button:disabled {
+    background-color: var(--disabled-blue);
+    animation: none;
+  }
+  & > p.disabled {
+    background-color: var(--disabled-pink);
+  }
+}
+.modal {
+  width: 200px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  >  h3, h4 {
+    font-weight: 500;
+    color: var(--blue-text);
+  }
+  > p {
+    font-size: 18px;
+    color: var(--blue-text);
+  }
+  > h4 {
+    font-size: 20px;
+    &.winner > span {
+      color: var(--blue);
+    }
+  }
+  > h3, h4 > span {
+    color: var(--pink);
+    text-transform: capitalize;
+  }
+  > h2 {
+    color: var(--pink);
+    font-weight: 500;
+  }
+  > svg {
+    width: 60px;
+  }
+}
+.exit {
+  margin-top: 30px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  font-size: 16px;
+  font-weight: 500;
+  border: 3px solid var(--pink);
+  color: var(--pink);
+  transition: 0.3s;
+}
+.exit:hover {
+  color: white;
+  background: var(--pink);
+  transition: 0.3s;
+}

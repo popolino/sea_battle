@@ -1,0 +1,72 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(11, 35px);
+  grid-template-rows: repeat(11, 35px);
+  gap: 1px;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--gray-blue);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cell {
+  width: 35px;
+  height: 35px;
+  background-color: var(--field-blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--dark-blue);
+}
+
+.pink {
+  background-color: var(--field-pink);
+}
+.empty {
+  background-color: transparent;
+}
+.hovered {
+  background-color: var(--ship-hover);
+  cursor: pointer;
+}
+.hoveredPink {
+  background-color: var(--pink);
+  cursor: pointer;
+}
+.ship {
+  background-color: var(--active);
+  cursor: pointer;
+}
+.invalid,
+.selected {
+  background-color: var(--red);
+}
+.hit {
+  & > svg {
+    fill: var(--red-hit);
+  }
+  background-color: rgba(228, 53, 53, 0.76);
+}
+.hit-enemy {
+  background-color: var(--hit-blue);
+  & > svg {
+    fill: var(--dark-blue);
+  }
+}
+.miss {
+  background-color: var(--pink-miss);
+}
+.miss-opponent {
+  background-color: var(--miss-blue);
+}
+.destroyed {
+  background-color: #9a5454;
+  & > svg {
+    fill: var(--pink-text);
+  }
+}
