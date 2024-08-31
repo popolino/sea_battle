@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import classes from "./field.module.scss";
 import clsx from "clsx";
 import SvgSelector from "../SvgSelector";

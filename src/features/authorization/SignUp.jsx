@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CustomMui from "../../components/CustomMui";
 import classes from "./auth.module.scss";
 import Bubbles from "./Bubbles";

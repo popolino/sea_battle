@@ -17,7 +17,6 @@ const CustomMui = ({
   onChange,
   buttonType,
   onClick,
-  svg,
   error,
 }) => {
   return (

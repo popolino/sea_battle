@@ -1,6 +1,6 @@
 import classes from "./navBar.module.scss";
 import SvgSelector from "../../components/SvgSelector";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { logoutUser } from "../../api/api";
