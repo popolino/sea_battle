@@ -19,7 +19,7 @@ export const registerUser = async (login, name, password) => {
 
 export const authUser = async (login, password) => {
   try {
-    const response = await axios.post("http://localhost:3001/api/signin", {
+    const response = await axios.post("http://45.135.233.235:3001/api/signin", {
       login,
       password,
     });
