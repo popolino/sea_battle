@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const registerUser = async (login, name, password) => {
   try {
-    const response = await axios.post("http://localhost:3001/api/signup", {
+    const response = await axios.post("http://45.135.233.235:3001/api/signup", {
       login,
       name,
       password,
@@ -88,7 +88,7 @@ export const getUserStatistics = async (userId) => {
 export const updateStatistic = async (userId, statsUpdate) => {
   try {
     const response = await axios.put(
-      `http://localhost:3001/api/users/${userId}/statistics`,
+      `http://45.135.233.235:3001/api/users/${userId}/statistics`,
       statsUpdate
     );
     console.log("Статистика успешно обновлена:", response.data);
@@ -102,7 +102,7 @@ export const updateStatistic = async (userId, statsUpdate) => {
 export const getPlayersRating = async () => {
   try {
     const response = await axios.get(
-      "http://localhost:3001/api/players-rating"
+      "http://45.135.233.235:3001/api/players-rating"
     );
     return response.data; // Данные рейтинга
   } catch (error) {
