@@ -39,7 +39,7 @@ export const logoutUser = () => {
 export const getUserByLogin = async (login) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/api/users/login/${login}`
+      `http://45.135.233.235:3001/api/users/login/${login}`
     );
     return response.data;
   } catch (error) {
@@ -51,7 +51,7 @@ export const getUserByLogin = async (login) => {
 export const checkHit = async (gameId, playerLogin, cell) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/game/check-hit",
+      "http://45.135.233.235:3001/api/game/check-hit",
       {
         game_id: gameId,
         player_login: playerLogin,
@@ -74,7 +74,7 @@ export const checkHit = async (gameId, playerLogin, cell) => {
 export const getUserStatistics = async (userId) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/api/users/${userId}/statistics`
+      `http://45.135.233.235:3001/api/users/${userId}/statistics`
     );
     const statistics = response.data;
     console.log("User statistics:", statistics);
