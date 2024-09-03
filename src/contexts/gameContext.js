@@ -39,7 +39,7 @@ export const GameProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:3001");
+    const ws = new WebSocket("ws:/45.135.233.235:3001");
     ws.onopen = () => {
       console.log("WebSocket connection established");
       ws.send(JSON.stringify({ type: "get_rooms" }));
