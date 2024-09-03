@@ -22,6 +22,7 @@ export const GameProvider = ({ children }) => {
   const [enemyShots, setEnemyShots] = useState([]);
   const [gameFinished, setGameFinished] = useState(false);
   const [winner, setWinner] = useState(null);
+
   const [destroyedShips, setDestroyedShips] = useState([]);
   const [ships, setShips] = useState([
     { id: "ship4", size: 4, count: 1 },
