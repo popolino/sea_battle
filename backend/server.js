@@ -248,18 +248,33 @@ webSocketServer.on("connection", (ws) => {
               JSON.stringify({ type: "error", message: "Game not found" })
             );
           }
+
           const updatedMovesHistory = [
             ...game.moves_history,
             ...(data.updateFields.moves_history || []),
           ];
           const lastMove = updatedMovesHistory[updatedMovesHistory.length - 1];
           let nextTurn = game.current_turn;
-          if (lastMove && lastMove.player_login === game.current_turn) {
+          const opponentShipsKey =
+              game.player1_login === lastMove.player_login ? "player2_ships" : "player1_ships";
+
+          const opponentShipsUpdated = data.updateFields[opponentShipsKey] || [];
+
+          // Находим последнее изменение кораблей
+          const lastShipUpdate = opponentShipsUpdated.find(
+              (ship) => ship.hit !== undefined
+          );
+
+          // Если hit: true, ход остается у текущего игрока, иначе передаем другому
+          if (lastShipUpdate && lastShipUpdate.hit === true) {
+            nextTurn = lastMove.player_login; // Оставляем ход у текущего игрока
+          } else {
             nextTurn =
-              game.current_turn === game.player1_login
-                ? game.player2_login
-                : game.player1_login;
+                game.current_turn === game.player1_login
+                    ? game.player2_login
+                    : game.player1_login; // Передаем ход другому игроку
           }
+
           const updatedGameData = {
             ...game.dataValues,
             ...data.updateFields,
