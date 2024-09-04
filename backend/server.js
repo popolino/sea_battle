@@ -248,18 +248,26 @@ webSocketServer.on("connection", (ws) => {
               JSON.stringify({ type: "error", message: "Game not found" }),
             );
           }
+
+          // Обновляем историю ходов
           const updatedMovesHistory = [
             ...game.moves_history,
             ...(data.updateFields.moves_history || []),
           ];
           const lastMove = updatedMovesHistory[updatedMovesHistory.length - 1];
+
+          // Рассчитываем следующий ход
           let nextTurn = game.current_turn;
-          if (lastMove && lastMove.player_login === game.current_turn) {
+          if (lastMove && lastMove.hit) {
+            nextTurn = game.current_turn; // Ход остаётся у текущего игрока, если попал
+          } else {
             nextTurn =
               game.current_turn === game.player1_login
                 ? game.player2_login
                 : game.player1_login;
           }
+
+          // Обновляем данные игры
           const updatedGameData = {
             ...game.dataValues,
             ...data.updateFields,
@@ -267,15 +275,17 @@ webSocketServer.on("connection", (ws) => {
             current_turn: nextTurn,
           };
 
-          await game.update(updatedGameData);
-
+          // Проверка готовности игроков
           if (updatedGameData.player1_ready && updatedGameData.player2_ready) {
             await game.update({ status: "in_progress" });
             updatedGameData.status = "in_progress";
           }
 
+          await game.update(updatedGameData);
+
           broadcast({ type: "game_updated", game: updatedGameData });
 
+          // Проверка завершения игры
           if (updatedGameData.status === "in_progress") {
             const player1ShipsDestroyed = game.player1_ships.every(
               (ship) => ship.hit,
@@ -300,8 +310,6 @@ webSocketServer.on("connection", (ws) => {
                 game: updatedGameData,
                 winner: updatedGameData.winner,
               });
-
-              return;
             }
           }
         } catch (error) {
@@ -322,11 +330,12 @@ webSocketServer.on("connection", (ws) => {
             );
           }
 
-          const playerShips =
+          const playerShipsKey =
             game.player1_login === data.player_login
-              ? game.player2_ships
-              : game.player1_ships;
+              ? "player2_ships"
+              : "player1_ships";
 
+          await game.update({ [playerShipsKey]: playerShips });
           const isHit = playerShips.some(
             (ship) => ship.row === data.cell.row && ship.col === data.cell.col,
           );
