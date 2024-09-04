@@ -330,12 +330,11 @@ webSocketServer.on("connection", (ws) => {
             );
           }
 
-          const playerShipsKey =
+          const playerShips =
             game.player1_login === data.player_login
-              ? "player2_ships"
-              : "player1_ships";
+              ? game.player2_ships
+              : game.player1_ships;
 
-          await game.update({ [playerShipsKey]: playerShips });
           const isHit = playerShips.some(
             (ship) => ship.row === data.cell.row && ship.col === data.cell.col,
           );
