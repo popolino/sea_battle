@@ -38,7 +38,7 @@ app.use(
   cors({
     origin: "http://45.135.233.235:3000",
     credentials: true,
-  })
+  }),
 );
 app.use(express.json());
 
@@ -65,7 +65,7 @@ const server = http.createServer(app);
 const webSocketServer = new ws.Server({ server });
 webSocketServer.on("connection", (ws) => {
   console.log(
-    `New client connected. Total clients: ${webSocketServer.clients.size}`
+    `New client connected. Total clients: ${webSocketServer.clients.size}`,
   );
 
   ws.on("message", async (message) => {
@@ -88,7 +88,7 @@ webSocketServer.on("connection", (ws) => {
         } catch (error) {
           console.error("Error creating room:", error);
           ws.send(
-            JSON.stringify({ type: "error", message: "Error creating room" })
+            JSON.stringify({ type: "error", message: "Error creating room" }),
           );
         }
         break;
@@ -98,7 +98,7 @@ webSocketServer.on("connection", (ws) => {
           const room = await Room.findOne({ where: { room_id: data.room_id } });
           if (!room) {
             return ws.send(
-              JSON.stringify({ type: "error", message: "Room not found" })
+              JSON.stringify({ type: "error", message: "Room not found" }),
             );
           }
           room.player2 = data.player2;
@@ -113,7 +113,7 @@ webSocketServer.on("connection", (ws) => {
         } catch (error) {
           console.error("Error joining room:", error);
           ws.send(
-            JSON.stringify({ type: "error", message: "Error joining room" })
+            JSON.stringify({ type: "error", message: "Error joining room" }),
           );
         }
         break;
@@ -125,12 +125,12 @@ webSocketServer.on("connection", (ws) => {
             JSON.stringify({
               type: "all_rooms",
               rooms,
-            })
+            }),
           );
         } catch (error) {
           console.error("Error fetching rooms:", error);
           ws.send(
-            JSON.stringify({ type: "error", message: "Error fetching rooms" })
+            JSON.stringify({ type: "error", message: "Error fetching rooms" }),
           );
         }
         break;
@@ -140,7 +140,7 @@ webSocketServer.on("connection", (ws) => {
           const room = await Room.findOne({ where: { room_id: data.room_id } });
           if (!room) {
             return ws.send(
-              JSON.stringify({ type: "error", message: "Room not found" })
+              JSON.stringify({ type: "error", message: "Room not found" }),
             );
           }
           await room.destroy();
@@ -152,7 +152,7 @@ webSocketServer.on("connection", (ws) => {
         } catch (error) {
           console.error("Error deleting room:", error);
           ws.send(
-            JSON.stringify({ type: "error", message: "Error deleting room" })
+            JSON.stringify({ type: "error", message: "Error deleting room" }),
           );
         }
         break;
@@ -172,7 +172,7 @@ webSocketServer.on("connection", (ws) => {
               JSON.stringify({
                 type: "game_created",
                 game: existingGame,
-              })
+              }),
             );
             return;
           }
@@ -194,7 +194,7 @@ webSocketServer.on("connection", (ws) => {
         } catch (error) {
           console.error("Error creating game:", error);
           ws.send(
-            JSON.stringify({ type: "error", message: "Error creating game" })
+            JSON.stringify({ type: "error", message: "Error creating game" }),
           );
         }
         break;
@@ -205,7 +205,7 @@ webSocketServer.on("connection", (ws) => {
           });
           if (!game) {
             return ws.send(
-              JSON.stringify({ type: "error", message: "Game not found" })
+              JSON.stringify({ type: "error", message: "Game not found" }),
             );
           }
           await game.destroy();
@@ -217,7 +217,7 @@ webSocketServer.on("connection", (ws) => {
         } catch (error) {
           console.error("Error deleting game:", error);
           ws.send(
-            JSON.stringify({ type: "error", message: "Error deleting game" })
+            JSON.stringify({ type: "error", message: "Error deleting game" }),
           );
         }
         break;
@@ -226,7 +226,7 @@ webSocketServer.on("connection", (ws) => {
           const game = await Game.findOne({ where: { id: data.game_id } });
           if (!game) {
             return ws.send(
-              JSON.stringify({ type: "error", message: "Game not found" })
+              JSON.stringify({ type: "error", message: "Game not found" }),
             );
           }
           ws.send(JSON.stringify({ type: "game_data", game }));
@@ -236,7 +236,7 @@ webSocketServer.on("connection", (ws) => {
             JSON.stringify({
               type: "error",
               message: "Error fetching game data",
-            })
+            }),
           );
         }
         break;
@@ -245,36 +245,33 @@ webSocketServer.on("connection", (ws) => {
           const game = await Game.findOne({ where: { id: data.game_id } });
           if (!game) {
             return ws.send(
-              JSON.stringify({ type: "error", message: "Game not found" })
+              JSON.stringify({ type: "error", message: "Game not found" }),
             );
           }
-
           const updatedMovesHistory = [
             ...game.moves_history,
             ...(data.updateFields.moves_history || []),
           ];
           const lastMove = updatedMovesHistory[updatedMovesHistory.length - 1];
           let nextTurn = game.current_turn;
-          const opponentShipsKey =
-              game.player1_login === lastMove.player_login ? "player2_ships" : "player1_ships";
 
-          const opponentShipsUpdated = data.updateFields[opponentShipsKey] || [];
-
-          // Находим последнее изменение кораблей
-          const lastShipUpdate = opponentShipsUpdated.find(
-              (ship) => ship.hit !== undefined
-          );
-
-          // Если hit: true, ход остается у текущего игрока, иначе передаем другому
-          if (lastShipUpdate && lastShipUpdate.hit === true) {
-            nextTurn = lastMove.player_login; // Оставляем ход у текущего игрока
+          if (
+            lastMove &&
+            lastMove.hit === true &&
+            lastMove.player_login === game.current_turn
+          ) {
+            if (lastMove.player_login === game.player1_login) {
+              nextTurn = game.player1_login;
+            }
+            if (lastMove.player_login === game.player2_login) {
+              nextTurn = game.player2_login;
+            }
           } else {
             nextTurn =
-                game.current_turn === game.player1_login
-                    ? game.player2_login
-                    : game.player1_login; // Передаем ход другому игроку
+              game.current_turn === game.player1_login
+                ? game.player2_login
+                : game.player1_login;
           }
-
           const updatedGameData = {
             ...game.dataValues,
             ...data.updateFields,
@@ -293,10 +290,10 @@ webSocketServer.on("connection", (ws) => {
 
           if (updatedGameData.status === "in_progress") {
             const player1ShipsDestroyed = game.player1_ships.every(
-              (ship) => ship.hit
+              (ship) => ship.hit,
             );
             const player2ShipsDestroyed = game.player2_ships.every(
-              (ship) => ship.hit
+              (ship) => ship.hit,
             );
 
             if (player1ShipsDestroyed || player2ShipsDestroyed) {
@@ -322,7 +319,7 @@ webSocketServer.on("connection", (ws) => {
         } catch (error) {
           console.error("Error updating game:", error);
           ws.send(
-            JSON.stringify({ type: "error", message: "Error updating game" })
+            JSON.stringify({ type: "error", message: "Error updating game" }),
           );
         }
         break;
@@ -333,7 +330,7 @@ webSocketServer.on("connection", (ws) => {
 
           if (!game) {
             return ws.send(
-              JSON.stringify({ type: "error", message: "Game not found" })
+              JSON.stringify({ type: "error", message: "Game not found" }),
             );
           }
 
@@ -343,7 +340,7 @@ webSocketServer.on("connection", (ws) => {
               : game.player1_ships;
 
           const isHit = playerShips.some(
-            (ship) => ship.row === data.cell.row && ship.col === data.cell.col
+            (ship) => ship.row === data.cell.row && ship.col === data.cell.col,
           );
 
           if (isHit) {
@@ -355,7 +352,7 @@ webSocketServer.on("connection", (ws) => {
           }
 
           const matchedShip = playerShips.find(
-            (ship) => ship.row === data.cell.row && ship.col === data.cell.col
+            (ship) => ship.row === data.cell.row && ship.col === data.cell.col,
           );
 
           const shotData = {
@@ -380,7 +377,7 @@ webSocketServer.on("connection", (ws) => {
         } catch (error) {
           console.error("Error checking hit:", error);
           ws.send(
-            JSON.stringify({ type: "error", message: "Error checking hit" })
+            JSON.stringify({ type: "error", message: "Error checking hit" }),
           );
         }
         break;
@@ -388,7 +385,7 @@ webSocketServer.on("connection", (ws) => {
       default:
         console.log("Unknown message type:", data.type);
         ws.send(
-          JSON.stringify({ type: "error", message: "Unknown message type" })
+          JSON.stringify({ type: "error", message: "Unknown message type" }),
         );
         break;
     }
@@ -414,7 +411,7 @@ sequelize
     console.log("Database connected");
     server.listen(PORT, () => {
       console.log(
-        `HTTP and WebSocket server is running on http://localhost:${PORT}`
+        `HTTP and WebSocket server is running on http://localhost:${PORT}`,
       );
     });
   })
