@@ -254,19 +254,7 @@ webSocketServer.on("connection", (ws) => {
           ];
           const lastMove = updatedMovesHistory[updatedMovesHistory.length - 1];
           let nextTurn = game.current_turn;
-
-          if (
-            lastMove &&
-            lastMove.hit === true &&
-            lastMove.player_login === game.current_turn
-          ) {
-            if (lastMove.player_login === game.player1_login) {
-              nextTurn = game.player1_login;
-            }
-            if (lastMove.player_login === game.player2_login) {
-              nextTurn = game.player2_login;
-            }
-          } else {
+          if (lastMove && lastMove.player_login === game.current_turn) {
             nextTurn =
               game.current_turn === game.player1_login
                 ? game.player2_login
