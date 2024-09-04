@@ -30,6 +30,7 @@ export const GameProvider = ({ children }) => {
     { id: "ship2", size: 2, count: 3 },
     { id: "ship1", size: 1, count: 4 },
   ]);
+
   const [shipsOfEnemy, setShipsOfEnemy] = useState([
     { id: "ship4", size: 1, destroyed: 0 },
     { id: "ship3", size: 2, destroyed: 0 },
@@ -87,6 +88,7 @@ export const GameProvider = ({ children }) => {
         );
         localStorage.removeItem("roomId");
       } else if (data.type === "game_created") {
+        console.log(authUser)
         console.log("Game created:", data.game);
         setCurrentGame(data.game);
         localStorage.setItem("currentGameId", data.game.id);
