@@ -363,7 +363,10 @@ const Game = ({ roomId }) => {
   }, [gameFinished, shipsOfEnemy]);
 
   useEffect(() => {
-    console.log(currentGame.current_turn)
+    if(currentGame){
+      console.log(currentGame.current_turn)
+
+    }
   }, [currentGame]);
   return (
     <div className={classes.container}>
