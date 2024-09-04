@@ -88,7 +88,12 @@ const Stats = () => {
         </div>
       </div>
     );
-  } else return <div>404</div>;
+  } else
+    return (
+      <div className="loader">
+        <SvgSelector id="loader" />
+      </div>
+    );
 };
 
 export default Stats;

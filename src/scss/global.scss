@@ -1,0 +1,43 @@
+:root {
+  --background: #dbf0ff;
+  --dark-blue: #262c34;
+  --blue-text: #263a5c;
+  --light-blue: #b7e3fc;
+  --blue: #5587de;
+  --light-hover: #79a8fb75;
+  --active: #79a8fb;
+  --gray-blue: #6f809d;
+  --field-blue: #d0ecfd;
+  --field-pink: #fbcfcf;
+  --panel-blue: #e5f3fd;
+  --ship-hover: #b8d1ff;
+  --pink: #ff8a8a;
+  --disabled-blue: #d3e2ff;
+  --disabled-pink: #fcd5d5;
+  --red: #fa4747;
+  --pink-miss: #bd9797;
+  --red-hit: #922222;
+  --panel-pink: #fde8e8;
+  --pink-text: #231919;
+  --hit-blue: #4e6a9c;
+  --miss-blue: #96a9c7
+}
+
+.not-found{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  color: var(--blue);
+  font-weight: 500;
+}
+
+.loader{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  & > svg{
+    width: 50px;
+  }
+}

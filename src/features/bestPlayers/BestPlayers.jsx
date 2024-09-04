@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classes from "./bestPlayers.module.scss";
 import { getPlayersRating } from "../../api/api";
+import SvgSelector from "../../components/SvgSelector";
 
 const BestPlayers = () => {
   const [players, setPlayers] = useState([]);
@@ -9,7 +10,7 @@ const BestPlayers = () => {
     getPlayersRating().then((response) => {
       const topPlayers = response
         .sort(
-          (a, b) => parseFloat(b.win_percentage) - parseFloat(a.win_percentage)
+          (a, b) => parseFloat(b.win_percentage) - parseFloat(a.win_percentage),
         )
         .slice(0, 3);
       setPlayers(topPlayers);
@@ -47,7 +48,12 @@ const BestPlayers = () => {
         </div>
       </div>
     );
-  } else return <div>404</div>;
+  } else
+    return (
+      <div className="loader">
+        <SvgSelector id="loader" />
+      </div>
+    );
 };
 
 export default BestPlayers;

@@ -248,44 +248,34 @@ webSocketServer.on("connection", (ws) => {
               JSON.stringify({ type: "error", message: "Game not found" }),
             );
           }
-
-          // Обновляем историю ходов
           const updatedMovesHistory = [
             ...game.moves_history,
             ...(data.updateFields.moves_history || []),
           ];
           const lastMove = updatedMovesHistory[updatedMovesHistory.length - 1];
 
-          // Рассчитываем следующий ход
           let nextTurn = game.current_turn;
           if (lastMove && lastMove.hit) {
-            nextTurn = game.current_turn; // Ход остаётся у текущего игрока, если попал
+            nextTurn = game.current_turn;
           } else {
             nextTurn =
               game.current_turn === game.player1_login
                 ? game.player2_login
                 : game.player1_login;
           }
-
-          // Обновляем данные игры
           const updatedGameData = {
             ...game.dataValues,
             ...data.updateFields,
             moves_history: updatedMovesHistory,
             current_turn: nextTurn,
           };
-
-          // Проверка готовности игроков
           if (updatedGameData.player1_ready && updatedGameData.player2_ready) {
             await game.update({ status: "in_progress" });
             updatedGameData.status = "in_progress";
           }
-
           await game.update(updatedGameData);
-
           broadcast({ type: "game_updated", game: updatedGameData });
 
-          // Проверка завершения игры
           if (updatedGameData.status === "in_progress") {
             const player1ShipsDestroyed = game.player1_ships.every(
               (ship) => ship.hit,
@@ -407,7 +397,7 @@ sequelize
     console.log("Database connected");
     server.listen(PORT, () => {
       console.log(
-        `HTTP and WebSocket server is running on http://localhost:${PORT}`,
+        `HTTP and WebSocket server is running on http://45.135.233.235:${PORT}`,
       );
     });
   })

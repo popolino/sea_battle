@@ -42,9 +42,7 @@ const App = () => {
                 path="/rooms/:roomId"
                 element={<ProtectedRoute element={OnlineGame} />}
               />
-              <Route
-                path="*"
-                element={<ProtectedRoute element={<div>404</div>} />}
+              <Route path="*" element={<div className="not-found">404</div>} />
               />
             </Route>
           </Routes>

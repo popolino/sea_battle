@@ -32,10 +32,10 @@ export const GameProvider = ({ children }) => {
   ]);
 
   const [shipsOfEnemy, setShipsOfEnemy] = useState([
-    { id: "ship4", size: 1, destroyed: 0 },
-    { id: "ship3", size: 2, destroyed: 0 },
-    { id: "ship2", size: 3, destroyed: 0 },
-    { id: "ship1", size: 4, destroyed: 0 },
+    { id: "ship4", size: 4, destroyed: 0 },
+    { id: "ship3", size: 3, destroyed: 0 },
+    { id: "ship2", size: 2, destroyed: 0 },
+    { id: "ship1", size: 1, destroyed: 0 },
   ]);
 
   const navigate = useNavigate();
@@ -79,16 +79,16 @@ export const GameProvider = ({ children }) => {
       } else if (data.type === "room_ready") {
         setRooms((prevRooms) =>
           prevRooms.map((room) =>
-            room.room_id === data.room.room_id ? data.room : room
-          )
+            room.room_id === data.room.room_id ? data.room : room,
+          ),
         );
       } else if (data.type === "room_deleted") {
         setRooms((prevRooms) =>
-          prevRooms.filter((room) => room.room_id !== data.room_id)
+          prevRooms.filter((room) => room.room_id !== data.room_id),
         );
         localStorage.removeItem("roomId");
       } else if (data.type === "game_created") {
-        console.log(authUser)
+        console.log(authUser);
         console.log("Game created:", data.game);
         setCurrentGame(data.game);
         localStorage.setItem("currentGameId", data.game.id);
@@ -197,8 +197,8 @@ export const GameProvider = ({ children }) => {
       prevRooms.map((room) =>
         room.room_id === roomId
           ? { ...room, status: "playing", player2: authUser.login }
-          : room
-      )
+          : room,
+      ),
     );
     navigate(`/rooms/${roomId}`);
     localStorage.setItem("roomId", roomId);
@@ -279,7 +279,7 @@ export const GameProvider = ({ children }) => {
   const updateDestroyedShipsStats = (shipId) => {
     setShipsOfEnemy((prevStats) => {
       return prevStats.map((ship) =>
-        ship.id === shipId ? { ...ship, destroyed: ship.destroyed + 1 } : ship
+        ship.id === shipId ? { ...ship, destroyed: ship.destroyed + 1 } : ship,
       );
     });
   };
