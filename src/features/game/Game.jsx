@@ -106,7 +106,7 @@ const Game = ({ roomId }) => {
         setIsValidPlacement(true);
       } else {
         setHoveredCell(
-          hoveredCells.map((cell) => ({ ...cell, invalid: true }))
+          hoveredCells.map((cell) => ({ ...cell, invalid: true })),
         );
         setIsValidPlacement(false);
       }
@@ -141,8 +141,8 @@ const Game = ({ roomId }) => {
         prevShips.map((ship) =>
           ship.id === selectedShip.id
             ? { ...ship, count: ship.count - 1 }
-            : ship
-        )
+            : ship,
+        ),
       );
     }
   };
@@ -152,8 +152,8 @@ const Game = ({ roomId }) => {
       placedShips.some(
         (placedShip) =>
           placedShip.row === surroundingCell.row &&
-          placedShip.col === surroundingCell.col
-      )
+          placedShip.col === surroundingCell.col,
+      ),
     );
   };
   const getSurroundingCells = (cell) => {
@@ -177,7 +177,7 @@ const Game = ({ roomId }) => {
 
   const handleReplaceShip = (shipId, row, col) => {
     const clickedCell = placedShips.find(
-      (cell) => cell.row === row && cell.col === col && cell.shipId === shipId
+      (cell) => cell.row === row && cell.col === col && cell.shipId === shipId,
     );
     if (!clickedCell) return;
 
@@ -186,7 +186,7 @@ const Game = ({ roomId }) => {
     if (isHorizontal) {
       for (let i = 1; i <= 10; i++) {
         const cell = placedShips.find(
-          (c) => c.row === row && c.col === i && c.shipId === shipId
+          (c) => c.row === row && c.col === i && c.shipId === shipId,
         );
         if (cell) {
           shipToReplaceCells.push(cell);
@@ -195,7 +195,7 @@ const Game = ({ roomId }) => {
     } else {
       for (let i = 0; i < rows.length; i++) {
         const cell = placedShips.find(
-          (c) => c.row === rows[i] && c.col === col && c.shipId === shipId
+          (c) => c.row === rows[i] && c.col === col && c.shipId === shipId,
         );
         if (cell) {
           shipToReplaceCells.push(cell);
@@ -208,17 +208,17 @@ const Game = ({ roomId }) => {
       if (!shipToReplace) return;
       setShips((prevShips) =>
         prevShips.map((ship) =>
-          ship.id === shipId ? { ...ship, count: ship.count + 1 } : ship
-        )
+          ship.id === shipId ? { ...ship, count: ship.count + 1 } : ship,
+        ),
       );
       setPlacedShips((prevPlacedShips) =>
         prevPlacedShips.filter(
           (cell) =>
             !shipToReplaceCells.some(
               (replaceCell) =>
-                replaceCell.row === cell.row && replaceCell.col === cell.col
-            )
-        )
+                replaceCell.row === cell.row && replaceCell.col === cell.col,
+            ),
+        ),
       );
       setSelectedShip(shipToReplace);
     }
@@ -245,11 +245,12 @@ const Game = ({ roomId }) => {
     }
   };
   const handleFight = async () => {
+    setSelectedCell(null);
     try {
       const result = await checkHit(
         currentGameId,
         authUser.login,
-        selectedCell
+        selectedCell,
       );
       const newShot = {
         hit: result.hit,
@@ -278,7 +279,7 @@ const Game = ({ roomId }) => {
       if (result.hit && result.ship_id) {
         console.log("result", result);
         const tempCells = updatedShips.filter(
-          (cell) => cell.id === result.ship_id
+          (cell) => cell.id === result.ship_id,
         );
         console.log("tempCells", tempCells);
         const isSunk = tempCells.every((cell) => cell.hit);
@@ -307,7 +308,7 @@ const Game = ({ roomId }) => {
       }
       checkHitViaWebSocket(currentGameId, authUser.login, selectedCell);
       const updatedGameData = {
-        moves_history: [newShot], // Отправляем только новый ход
+        moves_history: [newShot],
         [playerKey]: updatedShips,
       };
       updateGameViaWebSocket(currentGameId, updatedGameData);
@@ -315,7 +316,6 @@ const Game = ({ roomId }) => {
       const storedShots = JSON.parse(localStorage.getItem("myShots")) || [];
       const updatedShots = [...storedShots, newShot];
       localStorage.setItem("myShots", JSON.stringify(updatedShots));
-      setSelectedCell(null);
     } catch (error) {
       console.error("Error with shot:", error);
     }
@@ -363,9 +363,8 @@ const Game = ({ roomId }) => {
   }, [gameFinished, shipsOfEnemy]);
 
   useEffect(() => {
-    if(currentGame){
-      console.log(currentGame.current_turn)
-
+    if (currentGame) {
+      console.log(currentGame.current_turn);
     }
   }, [currentGame]);
   return (
@@ -393,7 +392,7 @@ const Game = ({ roomId }) => {
                     classes["ship-container"],
                     selectedShip &&
                       ship.id === selectedShip.id &&
-                      classes.selected
+                      classes.selected,
                   )}
                   onClick={() => handleShipClick(ship)}
                 >
@@ -412,7 +411,7 @@ const Game = ({ roomId }) => {
                     classes["ship-container"],
                     selectedShip &&
                       ship.id === selectedShip.id &&
-                      classes.selected
+                      classes.selected,
                   )}
                   onClick={() => handleShipClick(ship)}
                 >
@@ -485,7 +484,7 @@ const Game = ({ roomId }) => {
                   key={ship.id}
                   className={clsx(
                     classes["ship-container"],
-                    classes["opponent-ship"]
+                    classes["opponent-ship"],
                   )}
                 >
                   <SvgSelector id={ship.id} />
@@ -501,7 +500,7 @@ const Game = ({ roomId }) => {
                   key={ship.id}
                   className={clsx(
                     classes["ship-container"],
-                    classes["opponent-ship"]
+                    classes["opponent-ship"],
                   )}
                 >
                   <SvgSelector id={ship.id} />
