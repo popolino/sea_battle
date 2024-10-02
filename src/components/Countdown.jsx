@@ -63,13 +63,6 @@ const Countdown = ({ setOpen, open, firstTurn }) => {
               }}
             >
               <p>START!</p>
-              {firstTurn === 2 ? (
-                <p style={{ fontSize: "5rem", color: "#d0ecfd" }}>Your move</p>
-              ) : (
-                <p style={{ fontSize: "5rem", color: "#fbcfcf" }}>
-                  Enemy's move
-                </p>
-              )}
             </div>
           ) : (
             counter
