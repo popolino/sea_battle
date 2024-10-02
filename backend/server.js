@@ -36,7 +36,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(
   cors({
-    origin: "http://45.135.233.235:3000",
+    origin: "http://193.42.113.37:3000",
     credentials: true,
   }),
 );
@@ -397,7 +397,7 @@ sequelize
     console.log("Database connected");
     server.listen(PORT, () => {
       console.log(
-        `HTTP and WebSocket server is running on http://45.135.233.235:${PORT}`,
+        `HTTP and WebSocket server is running on http://193.42.113.37:${PORT}`,
       );
     });
   })

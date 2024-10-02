@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const registerUser = async (login, name, password) => {
   try {
-    const response = await axios.post("http://45.135.233.235:3001/api/signup", {
+    const response = await axios.post("http://193.42.113.37:3001/api/signup", {
       login,
       name,
       password,
@@ -19,7 +19,7 @@ export const registerUser = async (login, name, password) => {
 
 export const authUser = async (login, password) => {
   try {
-    const response = await axios.post("http://45.135.233.235:3001/api/signin", {
+    const response = await axios.post("http://193.42.113.37:3001/api/signin", {
       login,
       password,
     });
@@ -39,7 +39,7 @@ export const logoutUser = () => {
 export const getUserByLogin = async (login) => {
   try {
     const response = await axios.get(
-      `http://45.135.233.235:3001/api/users/login/${login}`
+      `http://193.42.113.37:3001/api/users/login/${login}`
     );
     return response.data;
   } catch (error) {
@@ -51,7 +51,7 @@ export const getUserByLogin = async (login) => {
 export const checkHit = async (gameId, playerLogin, cell) => {
   try {
     const response = await axios.post(
-      "http://45.135.233.235:3001/api/game/check-hit",
+      "http://193.42.113.37:3001/api/game/check-hit",
       {
         game_id: gameId,
         player_login: playerLogin,
@@ -74,7 +74,7 @@ export const checkHit = async (gameId, playerLogin, cell) => {
 export const getUserStatistics = async (userId) => {
   try {
     const response = await axios.get(
-      `http://45.135.233.235:3001/api/users/${userId}/statistics`
+      `http://193.42.113.37:3001/api/users/${userId}/statistics`
     );
     const statistics = response.data;
     console.log("User statistics:", statistics);
@@ -88,7 +88,7 @@ export const getUserStatistics = async (userId) => {
 export const updateStatistic = async (userId, statsUpdate) => {
   try {
     const response = await axios.put(
-      `http://45.135.233.235:3001/api/users/${userId}/statistics`,
+      `http://193.42.113.37:3001/api/users/${userId}/statistics`,
       statsUpdate
     );
     console.log("Статистика успешно обновлена:", response.data);
@@ -102,7 +102,7 @@ export const updateStatistic = async (userId, statsUpdate) => {
 export const getPlayersRating = async () => {
   try {
     const response = await axios.get(
-      "http://45.135.233.235:3001/api/players-rating"
+      "http://193.42.113.37:3001/api/players-rating"
     );
     return response.data; // Данные рейтинга
   } catch (error) {
